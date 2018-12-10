@@ -16,6 +16,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import NoSuchElementException, WebDriverException
 from selenium.common.exceptions import TimeoutException
+from pyvirtualdisplay import Display
 
 
 BASE_URL = "https://www.yummly.com/recipes"
@@ -30,11 +31,19 @@ class YummlyScraper:
 
         # Webdriverを用いてそれぞれのカテゴリの文字列を取得する
         time.sleep(1)
-        driver_path = os.path.expanduser('~/chromedriver')
-        driver = webdriver.Chrome(driver_path)
+        # driver_path = os.path.expanduser('~/chromedriver')
+
+        display = Display(visible=0, size=(1024, 768))
+        display.start()
+
+        driver = webdriver.Chrome()
+        driver.set_window_size(1024, 768)
         driver.get(category_list_url)
 
         WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, 'toggle-filters')))
+        filter_elm = driver.find_element_by_class_name('toggle-filters')
+        filter_elm.click()
+        time.sleep(1)
 
         recipe_list_page_html = driver.page_source
         recipe_list_page_soup = BeautifulSoup(recipe_list_page_html, 'lxml')
