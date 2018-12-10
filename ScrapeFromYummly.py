@@ -20,7 +20,7 @@ from pyvirtualdisplay import Display
 
 
 BASE_URL = "https://www.yummly.com/recipes"
-PROJECT_ROOT = "/Users/d/nutrition_collection_yummly"
+PROJECT_ROOT = os.path.expanduser("~/nutrition_collection_yummly")
 
 class YummlyScraper:
 
