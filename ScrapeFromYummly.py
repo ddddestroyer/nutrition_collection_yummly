@@ -83,9 +83,14 @@ class YummlyScraper:
 
     # 料理情報の取得
     def scrape_cooking_info(self, recipe_page_item, cooking_id):
+        time.sleep(1.0)
         cooking_info = {}
         cooking_info["cooking_id"] = cooking_id
         cooking_info["cooking_name"] = recipe_page_item["name"]
+        recipe_image_url = recipe_page_item["image"]
+        image_name = f"id_{cooking_id}.png"
+        with open(f"{PROJECT_ROOT}/data/recipe_images/{image_name}", "wb") as f:
+            f.write(requests.get(recipe_image_url).content)
         cooking_info["description"] = recipe_page_item["description"]
         cooking_info["for_how_many_people"] = recipe_page_item["recipeYield"]
 
@@ -186,7 +191,7 @@ class YummlyScraper:
 
             for order_in_item, recipe_item in enumerate(recipe_items):
                 order_in_item += 1
-                cooking_id = order_in_item + cooking_id_num
+                cooking_id = int(category_row["id"])*10000 + order_in_item + cooking_id_num
 
                 category_dict = {"root_id": category_row["id"]}
 
