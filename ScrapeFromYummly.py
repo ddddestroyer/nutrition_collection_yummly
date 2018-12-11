@@ -83,7 +83,7 @@ class YummlyScraper:
 
     # 料理情報の取得
     def scrape_cooking_info(self, recipe_page_item, cooking_id):
-        time.sleep(1.0)
+        time.sleep(0.5)
         cooking_info = {}
         cooking_info["cooking_id"] = cooking_id
         cooking_info["cooking_name"] = recipe_page_item["name"]
