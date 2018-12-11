@@ -189,7 +189,8 @@ class YummlyScraper:
 
             for order_in_item, recipe_item in enumerate(recipe_items):
                 order_in_item += 1
-                cooking_id = int(category_row["id"])*10000 + order_in_item
+                cooking_num = str(int(category_row["id"])*10000 + order_in_item)
+                cooking_id = cooking_num.zfill(6)
 
                 category_dict = {"root_id": category_row["id"]}
 
