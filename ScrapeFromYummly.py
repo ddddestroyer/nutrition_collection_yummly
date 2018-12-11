@@ -168,8 +168,6 @@ class YummlyScraper:
 
         root_category_df = self.scrape_category()
 
-        cooking_id_num = 0
-
         for num, category_row in root_category_df.iterrows():
 
             while True:
@@ -191,14 +189,11 @@ class YummlyScraper:
 
             for order_in_item, recipe_item in enumerate(recipe_items):
                 order_in_item += 1
-                cooking_id = int(category_row["id"])*10000 + order_in_item + cooking_id_num
+                cooking_id = int(category_row["id"])*10000 + order_in_item
 
                 category_dict = {"root_id": category_row["id"]}
 
                 self.save_recipe(recipe_item, cooking_id, category_dict)
-
-            else:
-                cooking_id_num += len(recipe_items)
 
 
 if __name__ == "__main__":
