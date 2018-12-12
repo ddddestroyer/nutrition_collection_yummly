@@ -91,6 +91,7 @@ class YummlyScraper:
         image_name = f"id_{cooking_id}.png"
         with open(f"{PROJECT_ROOT}/data/recipe_images/{image_name}", "wb") as f:
             f.write(requests.get(recipe_image_url).content)
+        cooking_info["image_name"] = image_name
         cooking_info["description"] = recipe_page_item["description"]
         cooking_info["for_how_many_people"] = recipe_page_item["recipeYield"]
 
@@ -189,8 +190,7 @@ class YummlyScraper:
 
             for order_in_item, recipe_item in enumerate(recipe_items):
                 order_in_item += 1
-                cooking_num = str(int(category_row["id"])*10000 + order_in_item)
-                cooking_id = cooking_num.zfill(6)
+                cooking_id = int(category_row["id"])*10000 + order_in_item
 
                 category_dict = {"root_id": category_row["id"]}
 
